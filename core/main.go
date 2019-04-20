@@ -11,6 +11,16 @@ func main() {
 	cmd := exec.Command("sh")
 	cmd.SysProcAttr = &syscall.SysProcAttr{
 		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS | syscall.CLONE_NEWUSER | syscall.CLONE_NEWNET,
+		UidMappings: []syscall.SysProcIDMap{
+			ContainerID: 1234,
+			HostID:      0,
+			Size:        1,
+		}, // adapt to the 3.19 kernel
+		GidMappings: []syscall.SysProcIDMap{
+			ContainerID: 1234,
+			HostID:      0,
+			Size:        1,
+		}, // adapt to the 3.19 kernel
 	}
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
